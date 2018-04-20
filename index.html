@@ -2,17 +2,47 @@
 <head>
   <title>Shady Jake's Shell Scripts</title>
   <style>
-    background: black;
-    color: white;
+    body {
+      background: black;
+      color: white;
+      font-family: monospace;
+    }
+
+    a {
+      color: white;
+    }
+
+    dl {
+    }
+
+    dd {
+      margin-left: 0;
+    }
+
+    dd:before {
+      content: "  ";
+      white-space: pre;
+    }
+
+    dd:after {
+      content: "\A\A";
+      white-space: pre;
+    }
   </style>
 </head>
 <body>
   <h1>Shady Jake's Shell Scripts</h1>
   <i>mostly harmless</i>
-  
+
   <dl>
-    <dt><a href='/key'>key</dt>
+    <dt><a href='/sj.exe'>/key</a></dt>
+    <dd>executes one of the following scripts</dd>
+
+    <dt><a href='/key'>/key</a></dt>
     <dd>temporarily adds an SSH key from lastpass into an ssh agent</dd>
+
+    <dt><a href='/install_lpass'>/install_lpass</a></dt>
+    <dd>installs lpass CLI on Ubuntu or mac</dd>
   </dl>
 </body>
 </html>
