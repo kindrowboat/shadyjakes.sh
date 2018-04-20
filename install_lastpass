@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+#!/usr/bin/env bash
+# copyright (c) 2018 S. Thomas Dunlap
+# Released under MIT License (SPDX:MIT)
+
+set -eu
+
+if which apt-get > /dev/null; then
+  sudo apt-get update
+  sudo apt-get install openssl libcurl4-openssl-dev libxml2 libssl-dev libxml2-dev pinentry-curses xclip cmake build-essential pkg-config
+  cd /tmp
+  curl -sL https://github.com/lastpass/lastpass-cli/releases/download/v1.3.0/lastpass-cli-1.3.0.tar.gz > lastpass-cli-1.3.0.tar.gz
+  tar -xf lastpass-cli-1.3.0.tar.gz
+  cd lastpass-cli-1.3.0
+  make
+  sudo make install
+  mkdir -p $HOME/.config
+elif which brew > /dev/null; then
+  brew install lastpass-cli --with-pinentry
+else
+  echo "install_lpass: neither 'apt-get' nor 'brew' is available to install the lpass CLI"
+fi
