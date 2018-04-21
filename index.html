@@ -12,37 +12,69 @@
       color: white;
     }
 
-    dl {
+    cmd {
+      white-space: pre;
+      display: block;
+    }
+
+    dt:before {
+      content: "/";
     }
 
     dd {
       margin-left: 0;
+      white-space: pre
     }
 
     dd:before {
       content: "  ";
-      white-space: pre;
     }
 
     dd:after {
       content: "\A\A";
-      white-space: pre;
     }
   </style>
 </head>
 <body>
   <h1>Shady Jake's Shell Scripts</h1>
-  <i>mostly harmless</i>
+  <p><i>mostly harmless</i></p>
 
-  <dl>
-    <dt><a href='/sj.exe'>/key</a></dt>
-    <dd>executes one of the following scripts</dd>
+  <h2>Instructions</h2>
+  <div id="instructions">
+    To run scripts install sj.exe by running:
+    <cmd>
+       curl -sL shadejakes.sh/sj.exe > /usr/local/bin/sj.exe && \
+       chmod +x /usr/local/bin/sj.exe && \
+       cat /usr/local/bin/sj.exe
+    </cmd>
 
-    <dt><a href='/key'>/key</a></dt>
-    <dd>temporarily adds an SSH key from lastpass into an ssh agent</dd>
+    Then run a script with
+    <cmd>
+      sj.exe SCRIPT_NAME
+    </cmd>
+  </div>
 
-    <dt><a href='/install_lpass'>/install_lpass</a></dt>
-    <dd>installs lpass CLI on Ubuntu or mac</dd>
-  </dl>
+  <h2>Available Scripts</h2>
+  <dl></dl>
 </body>
+
+<script>
+  fetch('/scripts.json').then(r => r.json()).then(scripts => {
+    const dl = document.querySelector('dl');
+    Object.values(scripts).forEach(script => {
+      const dt = document.createElement('dt');
+      const a = document.createElement('a');
+      a.href = script.href
+      aText = document.createTextNode(script.name);
+      a.appendChild(aText);
+      dt.appendChild(a);
+      dl.appendChild(dt);
+
+      const dd = document.createElement('dd');
+      ddText = document.createTextNode(script.description);
+      dd.appendChild(ddText);
+      dl.appendChild(dd);
+    });
+  });
+</script>
 </html>

@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+set -e
+
+: ${SJ_SERVER:=shadyjakes.sh}
+script_name=$1
+passthru_args=${@:2}
+
+if ! which jq> /dev/null; then
+  if which brew > /dev/null; then
+    brew install jq
+  else
+    sudo apt-get install jq
+  fi
+fi
+
+scripts_json=$(curl -sL "${SJ_SERVER}/scripts.json")
+
+function usage {
+cat <<HERE
+
+  sj.exe SCRIPT
+
+  Downloads, displays, and then runs a script from ${SJ_SERVER}.
+
+  SCRIPT: script to run, can be:
+
+HERE
+
+( printf "SCRIPT\\tDESCRIPTION\\n"; echo "$scripts_json" | jq -r ".[] | [.name, .description] | @tsv" ) | column -s $'\t' -t | sed "s/^/  /"
+}
+
+function show_and_run {
+  script_path="${SJ_SERVER}${1}"
+  script=$(curl -sL $script_path)
+  passthru_args="${@:2}"
+  echo "=== START: $script_path ==============================================="
+  printf "%s\\n\\n" "$script"
+  echo "--- END: $script_path ---------8<--------------------------------------"
+  while true; do
+    read -p "Do you wish to run this script? [y/N] " yn
+    case $yn in
+      [Yy] )
+         echo "~~~ RUN: $script_path ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+         bash <( echo "$script" ) $passthru_args
+         break;;
+      [^Nn]) echo "Please answer y or n."; continue;;
+      *    ) exit;;
+    esac
+done
+}
+
+if [ "$#" -lt 1 ]; then
+  echo "sj.exe: too few arguments"
+  usage
+  exit 1
+fi
+
+href=$(echo "$scripts_json" | jq -r ".$script_name.href")
+
+if [ "$href" != "null" ]; then
+  show_and_run "$href" $passthru_args
+else
+  echo
+  echo "sj.exe: $1 not found in scripts"
+  usage
+  exit 2
+fi

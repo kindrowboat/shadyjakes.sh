@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+# copyright (c) 2017 Tom Dunlap
+# based on lpass-add copyright (c) 2016 Luke Turner
+# Released under MIT License (SPDX:MIT)
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+if ! which lpass > /dev/null; then
+  cat	<<-HERE
+
+	  key: lpass is not installed, to install run:
+
+	    sj.exe install_lpass
+
+	HERE
+  exit 1
+fi
+
+
+if [ $# -ne 1 ]; then
+  cat	<<-HERE
+	key: too few arguments
+
+	  key usage:
+
+	    sj.exe key EMAIL
+
+	  EMAIL: lastpass login e-mail.
+
+	HERE
+  exit 1
+fi
+
+LPASS_USER=$1
+readonly KEY_NAME=personal_key
+
+TEMP_CERT_FILE=$(mktemp)
+readonly TEMP_CERT_FILE
+
+onexit() {
+  local EXIT_CODE=$?
+  echo "Removing temporary file $TEMP_CERT_FILE"
+  rm "$TEMP_CERT_FILE"
+  if [[ $EXIT_CODE == 0 ]]; then
+    echo "shadyjakes.sh: identity added successfully"
+  else
+    echo "shadyjakes.sh: failed to add identity $KEY_NAME"
+    echo "Script exited with code $EXIT_CODE"
+  fi
+}
+
+trap onexit EXIT
+
+LPASS_DISABLE_PINENTRY=1 lpass login $LPASS_USER
+echo "Writing key $KEY_NAME to temporary file $TEMP_CERT_FILE"
+if ! lpass show --notes "$KEY_NAME" > "$TEMP_CERT_FILE"; then
+  cat	<<-HERE
+
+	  shadyjakes.sh/key: could not load note $KEY_NAME
+	  You can upload your encrypted key using
+
+	    cat PATH_TO_KEY | lpass add --notes --non-interactive $KEY_NAME
+
+	HERE
+  exit 1
+fi
+
+echo "Adding SSH key $KEY_NAME"
+ssh-add -t 32400 "$TEMP_CERT_FILE"

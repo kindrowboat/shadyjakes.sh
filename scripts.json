@@ -1,0 +1,19 @@
+{
+    "sj.exe": {
+      "name": "sj.exe",
+      "description": "executes one of the following scripts",
+      "href": "/sj.exe"
+    },
+
+    "key": {
+      "name": "key",
+      "description": "loads key from lastpass into SSH agent (temporarily)",
+      "href": "/key"
+    },
+
+    "install_lpass": {
+      "name": "install_lpass",
+      "description": "installs lpass CLI on Ubuntu or mac",
+      "href": "/install_lpass"
+    }
+}
