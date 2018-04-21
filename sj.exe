@@ -27,7 +27,7 @@ cat <<HERE
 
 HERE
 
-( printf "SCRIPT\\tDESCRIPTION\\n"; echo "$scripts_json" | jq -r ".[] | [.name, .description] | @tsv" ) | column -s $'\t' -t | sed "s/^/  /"
+( printf "SCRIPT\\tDESCRIPTION\\n";echo "$scripts_json" | jq -r '.[] | "\(.name)\t\(.description)" ') | column -s $'\t' -t | sed "s/^/  /"
 }
 
 function show_and_run {

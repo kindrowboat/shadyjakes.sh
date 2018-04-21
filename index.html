@@ -44,8 +44,8 @@
        tput setaf 6; cat /tmp/sj.exe; tput sgr0 && \
        echo '--- sj.exe --------8<-----------------------------------------' && \
        echo 'Review the above script.  Press enter to install ^C to cancel.' && \
-       read
-       install /tmp/sj.exe /usr/local/bin/ && \
+       read && \
+       sudo install /tmp/sj.exe /usr/local/bin/ && \
        rm /tmp/sj.exe
     </cmd>
 
