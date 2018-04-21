@@ -21,5 +21,11 @@
       "name": "install_luans_vim_on_trusty",
       "description": "installs neovim and luan's configuration",
       "href": "/install_luans_vim_on_trusty"
+    },
+
+    "install_tmux_on_trusty": {
+      "name": "install_tmux_on_trusty",
+      "description": "installs tmux 2.5 and luan's config",
+      "href": "/install_tmux_on_trusty"
     }
 }
