@@ -43,9 +43,14 @@
   <div id="instructions">
     To run scripts install sj.exe by running:
     <cmd>
-       curl -sL shadyjakes.sh/sj.exe > /usr/local/bin/sj.exe && \
-       chmod +x /usr/local/bin/sj.exe && \
-       cat /usr/local/bin/sj.exe
+       curl -sL shadyjakes.sh/sj.exe > /tmp/sj.exe && \
+       echo '=== sj.exe ===================================================' && \
+       printf "\033[36m$( cat /tmp/sj.exe )\e[0m\n" && \
+       echo '--- sj.exe --------8<-----------------------------------------' && \
+       echo 'Review the above script.  Press enter to install ^C to cancel.' && \
+       read
+       install /tmp/sj.exe /usr/local/bin/ && \
+       rm /tmp/sj.exe
     </cmd>
 
     Then run a script with
