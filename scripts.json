@@ -1,7 +1,7 @@
 {
     "sj.exe": {
       "name": "sj.exe",
-      "description": "executes one of the following scripts",
+      "description": "load, preview, and execute script",
       "href": "/sj.exe"
     },
 
