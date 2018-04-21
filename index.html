@@ -45,7 +45,7 @@
     <cmd>
        curl -sL shadyjakes.sh/sj.exe > /tmp/sj.exe && \
        echo '=== sj.exe ===================================================' && \
-       printf "\033[36m$( cat /tmp/sj.exe )\e[0m\n" && \
+       tput setaf 6; cat /tmp/sj.exe; tput sgr0 && \
        echo '--- sj.exe --------8<-----------------------------------------' && \
        echo 'Review the above script.  Press enter to install ^C to cancel.' && \
        read
