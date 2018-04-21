@@ -15,5 +15,11 @@
       "name": "install_lpass",
       "description": "installs lpass CLI on Ubuntu or mac",
       "href": "/install_lpass"
+    },
+
+    "install_luans_vim_on_trusty": {
+      "name": "install_luans_vim_on_trusty",
+      "description": "installs neovim and luan's configuration",
+      "href": "/install_luans_vim_on_trusty"
     }
 }
