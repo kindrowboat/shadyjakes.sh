@@ -8,9 +8,9 @@ if which apt-get > /dev/null; then
   sudo apt-get update
   sudo apt-get install openssl libcurl4-openssl-dev libxml2 libssl-dev libxml2-dev pinentry-curses xclip cmake build-essential pkg-config
   cd /tmp
-  curl -sL https://github.com/lastpass/lastpass-cli/releases/download/v1.3.0/lastpass-cli-1.3.0.tar.gz > lastpass-cli-1.3.0.tar.gz
-  tar -xf lastpass-cli-1.3.0.tar.gz
-  cd lastpass-cli-1.3.0
+  curl -sL https://github.com/lastpass/lastpass-cli/releases/download/v1.3.1/lastpass-cli-1.3.1.tar.gz > lastpass-cli-1.3.1.tar.gz
+  tar -xf lastpass-cli-1.3.1.tar.gz
+  cd lastpass-cli-1.3.1
   make
   sudo make install
   mkdir -p $HOME/.config
