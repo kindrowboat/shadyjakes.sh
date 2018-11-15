@@ -6,12 +6,16 @@ set -e
 script_name=$1
 passthru_args=${@:2}
 
-if ! which jq> /dev/null; then
+if ! which jq > /dev/null; then
   if which brew > /dev/null; then
     brew install jq
   else
     sudo apt-get install jq
   fi
+fi
+
+if ! which column > /dev/null; then
+  sudo apt-get install bsdmainutils
 fi
 
 scripts_json=$(curl -sL "${SJ_SERVER}/scripts.json")
